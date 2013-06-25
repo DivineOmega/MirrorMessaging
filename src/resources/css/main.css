@@ -1,0 +1,42 @@
+body
+{
+	color: #222;
+	font-family: arial, sans-serif;
+}
+a
+{
+	color: #990000;
+	text-decoration: none;
+}
+a:hover
+{
+	text-decoration: underline;
+}
+#msgDetails
+{
+	font-size: 80%;
+	color: #999;
+}
+#sidebar
+{
+	float: left; 
+	width: 120px; 
+	padding: 10px; 
+	border-right: 1px dotted #ccc; 
+	margin-right: 20px; 
+	min-height: 600px;
+}
+#sidebar #logo
+{
+	font-weight: bold; 
+	text-align: center;
+}
+#sidebar #compose
+{
+	margin-left: -12px;
+}
+#sidebar #mailboxes
+{
+	margin-left: -12px;
+	/* margin-left: 4px; */
+}
