@@ -67,6 +67,16 @@ public class WebServer extends Thread
 		
 		html = html.replace("[[sidebar]]", getTemplateHTML("sidebar.html"));
 		
+		String fromSelect = "";
+		fromSelect += "<select name=\"from\">";
+		
+		fromSelect += "<option value=\"BM-2D9THm75v9thRb2GPAt57BwPJkQWCykyDY\">";
+		fromSelect += "DivineOmega:m (BM-2D9THm75v9thRb2GPAt57BwPJkQWCykyDY)";
+		fromSelect += "</option>";
+		fromSelect += "</select>";
+		
+		html = html.replace("[[fromSelect]]", fromSelect);
+		
 		return html;
 	}
 	
@@ -132,6 +142,48 @@ public class WebServer extends Thread
 				else if (requestParts[1].equals("/css/main.css"))
 				{
 					out.println(getCSS("main.css"));
+				}
+				else if (requestParts[1].equals("/compose"))
+				{
+					out.println(getPreparedTemplateHTML("compose.html"));
+				}
+				else if (requestParts[1].equals("/send_message"))
+				{
+					String from = null;
+					String to = null;
+					String subject = null;
+					String body = null;
+					
+					String line = "";
+					while ((line = in.readLine()) != null)
+					{
+						if (line.equals("Content-Disposition: form-data; name=\"to\""))
+						{
+							in.readLine();
+							to = in.readLine();
+						}
+						else if (line.equals("Content-Disposition: form-data; name=\"from\""))
+						{
+							in.readLine();
+							from = in.readLine();
+						}
+						else if (line.equals("Content-Disposition: form-data; name=\"subject\""))
+						{
+							in.readLine();
+							subject = in.readLine();
+						}
+						else if (line.equals("Content-Disposition: form-data; name=\"body\""))
+						{
+							in.readLine();
+							body = in.readLine();
+						}
+						if (from!=null && to!=null && subject!=null && body != null) break;
+					}
+					
+					System.out.println("From:    "+from);
+					System.out.println("To:      "+to);
+					System.out.println("Subject: "+subject);
+					System.out.println("Body:    "+body);
 				}
 				else if (requestParts[1].equals("/inbox"))
 				{
