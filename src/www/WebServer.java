@@ -199,6 +199,10 @@ public class WebServer extends Thread
 					System.out.println("To:      "+to);
 					System.out.println("Subject: "+subject);
 					System.out.println("Body:    "+body);
+					
+					BitMsgComms bitMsgComms = new BitMsgComms();
+					bitMsgComms.sendMessage(to, from, subject, body);
+					
 				}
 				else if (requestParts[1].equals("/inbox"))
 				{

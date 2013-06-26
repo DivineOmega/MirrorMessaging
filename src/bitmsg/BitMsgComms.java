@@ -257,5 +257,24 @@ public class BitMsgComms
 		
 		return msg;
 	}
+	
+	public Message sendMessage(String toAddress, String fromAddress, String subject, String message) throws UnsupportedEncodingException, MalformedURLException, XmlRpcException
+	{
+		subject = new String(Base64.encodeBase64(subject.getBytes("UTF-8")), "UTF-8");
+		message = new String(Base64.encodeBase64(message.getBytes("UTF-8")), "UTF-8");
+		
+		Vector<String> params = new Vector<String>();
+		params.addElement(toAddress);
+		params.addElement(fromAddress);
+		params.addElement(subject);
+		params.addElement(subject);
+		
+		String result = (String) getBitMsg().execute("sendMessage", params);
+		
+		System.out.println(result);
+		
+		return null;
+		
+	}
 
 }
