@@ -49,6 +49,37 @@ public class BitMsgComms
 		
 		return result;
 	}
+	
+	public ArrayList<Address> listAddresses() throws MalformedURLException, XmlRpcException, UnsupportedEncodingException 
+	{
+		Vector<String> params = new Vector<String>();
+		
+		String result = (String) getBitMsg().execute("listAddresses", params);
+				
+		JSONObject jsonResult = new JSONObject(result);
+		JSONArray jsonAddresses = jsonResult.getJSONArray("addresses");
+		
+		ArrayList<Address> addresses = new ArrayList<Address>();
+		
+		int index = 0;
+		while (index<jsonAddresses.length())
+		{
+			JSONObject jsonAddress = jsonAddresses.getJSONObject(index);
+			
+			String label = jsonAddress.getString("label");
+			String addressString = jsonAddress.getString("address");
+			int stream = jsonAddress.getInt("stream");
+			boolean enabled = jsonAddress.getBoolean("enabled");
+			
+			Address address = new Address(label, addressString, stream, enabled);
+			
+			addresses.add(address);
+			
+			index++;
+		}
+				
+		return addresses;
+	}
 
 	public ArrayList<Message> getAllInboxMessages() throws MalformedURLException, XmlRpcException, UnsupportedEncodingException 
 	{
@@ -225,6 +256,25 @@ public class BitMsgComms
 		Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, status, ackData);
 		
 		return msg;
+	}
+	
+	public Message sendMessage(String toAddress, String fromAddress, String subject, String message) throws UnsupportedEncodingException, MalformedURLException, XmlRpcException
+	{
+		subject = new String(Base64.encodeBase64(subject.getBytes("UTF-8")), "UTF-8");
+		message = new String(Base64.encodeBase64(message.getBytes("UTF-8")), "UTF-8");
+		
+		Vector<String> params = new Vector<String>();
+		params.addElement(toAddress);
+		params.addElement(fromAddress);
+		params.addElement(subject);
+		params.addElement(subject);
+		
+		String ackData = (String) getBitMsg().execute("sendMessage", params);
+		
+		if (ackData == null || ackData.isEmpty()) return null;
+		
+		return getSentMessageByAckData(ackData);
+		
 	}
 
 }
