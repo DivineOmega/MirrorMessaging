@@ -49,6 +49,37 @@ public class BitMsgComms
 		
 		return result;
 	}
+	
+	public ArrayList<Address> listAddresses() throws MalformedURLException, XmlRpcException, UnsupportedEncodingException 
+	{
+		Vector<String> params = new Vector<String>();
+		
+		String result = (String) getBitMsg().execute("listAddresses", params);
+				
+		JSONObject jsonResult = new JSONObject(result);
+		JSONArray jsonAddresses = jsonResult.getJSONArray("addresses");
+		
+		ArrayList<Address> addresses = new ArrayList<Address>();
+		
+		int index = 0;
+		while (index<jsonAddresses.length())
+		{
+			JSONObject jsonAddress = jsonAddresses.getJSONObject(index);
+			
+			String label = jsonAddress.getString("label");
+			String addressString = jsonAddress.getString("address");
+			int stream = jsonAddress.getInt("stream");
+			boolean enabled = jsonAddress.getBoolean("enabled");
+			
+			Address address = new Address(label, addressString, stream, enabled);
+			
+			addresses.add(address);
+			
+			index++;
+		}
+		
+		return addresses;
+	}
 
 	public ArrayList<Message> getAllInboxMessages() throws MalformedURLException, XmlRpcException, UnsupportedEncodingException 
 	{
