@@ -135,34 +135,7 @@ public class WebServer extends Thread
 				String[] requestParts = request.split(" ");
 				System.out.println(request);
 				
-				if (requestParts[1].equals("/"))
-				{
-					out.println("HTTP/1.0 302 Temporary Redirect");
-					out.println("Location: /inbox");
-					out.println();
-				}
-				else
-				{
-					out.println("HTTP/1.0 200 OK");
-					String contentType = "text/html";
-					if (requestParts[1].startsWith("/css/")) contentType = "text/css";
-					out.println("Content-Type: "+contentType+"; charset=UTF-8");
-					out.println();
-				}
-				
-				if (requestParts[1].equals("/"))
-				{
-					out.println("You should be redirected to /inbox");
-				}
-				else if (requestParts[1].equals("/css/main.css"))
-				{
-					out.println(getCSS("main.css"));
-				}
-				else if (requestParts[1].equals("/compose"))
-				{
-					out.println(getPreparedTemplateHTML("compose.html"));
-				}
-				else if (requestParts[1].equals("/send_message"))
+				if (requestParts[1].equals("/send_message"))
 				{
 					String from = null;
 					String to = null;
@@ -195,14 +168,50 @@ public class WebServer extends Thread
 						if (from!=null && to!=null && subject!=null && body != null) break;
 					}
 					
-					System.out.println("From:    "+from);
-					System.out.println("To:      "+to);
-					System.out.println("Subject: "+subject);
-					System.out.println("Body:    "+body);
-					
 					BitMsgComms bitMsgComms = new BitMsgComms();
-					bitMsgComms.sendMessage(to, from, subject, body);
+					Message sentMessage = bitMsgComms.sendMessage(to, from, subject, body);
 					
+					if (sentMessage!=null && !sentMessage.getAckData().isEmpty())
+					{
+						out.println("HTTP/1.0 302 Redirect");
+						out.println("Location: /sent/message/"+sentMessage.getAckData());
+					}
+					else
+					{
+						out.println("HTTP/1.0 200 OK");
+						String contentType = "text/html";
+						out.println("Content-Type: "+contentType+"; charset=UTF-8");
+						out.println();
+						out.println("Sorry, there was an error sending this message. Please go back and try again.");
+					}				
+					
+				}
+				else if (requestParts[1].equals("/"))
+				{
+					out.println("HTTP/1.0 302 Temporary Redirect");
+					out.println("Location: /inbox");
+					out.println();
+				}
+				else
+				{
+					out.println("HTTP/1.0 200 OK");
+					String contentType = "text/html";
+					if (requestParts[1].startsWith("/css/")) contentType = "text/css";
+					out.println("Content-Type: "+contentType+"; charset=UTF-8");
+					out.println();
+				}
+				
+				if (requestParts[1].equals("/"))
+				{
+					out.println("You should be redirected to /inbox");
+				}
+				else if (requestParts[1].equals("/css/main.css"))
+				{
+					out.println(getCSS("main.css"));
+				}
+				else if (requestParts[1].equals("/compose"))
+				{
+					out.println(getPreparedTemplateHTML("compose.html"));
 				}
 				else if (requestParts[1].equals("/inbox"))
 				{
@@ -312,6 +321,7 @@ public class WebServer extends Thread
 					output = output.replace("[[fromAddress]]", msg.getFromAddress());
 					output = output.replace("[[toAddress]]", msg.getToAddress());
 					output = output.replace("[[message]]", msg.getMessage().replace("\n", "<br/>"));
+					output = output.replace("[[status]]", msg.getHumanFriendlyStatus());
 					
 					out.println(output);
 					

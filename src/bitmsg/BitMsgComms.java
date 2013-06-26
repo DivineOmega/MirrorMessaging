@@ -269,11 +269,11 @@ public class BitMsgComms
 		params.addElement(subject);
 		params.addElement(subject);
 		
-		String result = (String) getBitMsg().execute("sendMessage", params);
+		String ackData = (String) getBitMsg().execute("sendMessage", params);
 		
-		System.out.println(result);
+		if (ackData == null || ackData.isEmpty()) return null;
 		
-		return null;
+		return getSentMessageByAckData(ackData);
 		
 	}
 
