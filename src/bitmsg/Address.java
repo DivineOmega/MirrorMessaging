@@ -14,4 +14,14 @@ public class Address
 		this.stream = stream;
 		this.enabled = enabled;
 	}
+	
+	public String getLabel() 
+	{
+		return label;
+	}
+
+	public String getAddress() 
+	{
+		return address;
+	}
 }

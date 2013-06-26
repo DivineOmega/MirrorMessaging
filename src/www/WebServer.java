@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import org.apache.xmlrpc.XmlRpcException;
 
+import bitmsg.Address;
 import bitmsg.BitMsgComms;
 import bitmsg.Message;
 
@@ -70,9 +71,23 @@ public class WebServer extends Thread
 		String fromSelect = "";
 		fromSelect += "<select name=\"from\">";
 		
-		fromSelect += "<option value=\"BM-2D9THm75v9thRb2GPAt57BwPJkQWCykyDY\">";
-		fromSelect += "DivineOmega:m (BM-2D9THm75v9thRb2GPAt57BwPJkQWCykyDY)";
-		fromSelect += "</option>";
+		try
+		{
+			BitMsgComms bitMsgComms = new BitMsgComms();
+			ArrayList<Address> addresses = bitMsgComms.listAddresses();
+			
+			for (Address address : addresses) 
+			{
+				fromSelect += "<option value=\""+address.getAddress()+"\">";
+				fromSelect += address.getLabel()+" ("+address.getAddress()+")";
+				fromSelect += "</option>";
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 		fromSelect += "</select>";
 		
 		html = html.replace("[[fromSelect]]", fromSelect);

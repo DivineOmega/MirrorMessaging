@@ -77,7 +77,7 @@ public class BitMsgComms
 			
 			index++;
 		}
-		
+				
 		return addresses;
 	}
 
