@@ -168,13 +168,24 @@ public class WebServer extends Thread
 						if (from!=null && to!=null && subject!=null && body != null) break;
 					}
 					
-					BitMsgComms bitMsgComms = new BitMsgComms();
-					Message sentMessage = bitMsgComms.sendMessage(to, from, subject, body);
-					
-					if (sentMessage!=null && !sentMessage.getAckData().isEmpty())
+					if (from!=null && to!=null && subject!=null && body != null)
 					{
-						out.println("HTTP/1.0 302 Redirect");
-						out.println("Location: /sent/message/"+sentMessage.getAckData());
+						BitMsgComms bitMsgComms = new BitMsgComms();
+						Message sentMessage = bitMsgComms.sendMessage(to, from, subject, body);
+						
+						if (sentMessage!=null && !sentMessage.getAckData().isEmpty())
+						{
+							out.println("HTTP/1.0 302 Redirect");
+							out.println("Location: /sent/message/"+sentMessage.getAckData());
+						}
+						else
+						{
+							out.println("HTTP/1.0 200 OK");
+							String contentType = "text/html";
+							out.println("Content-Type: "+contentType+"; charset=UTF-8");
+							out.println();
+							out.println("Sorry, there was an error sending this message. Please go back and try again.");
+						}
 					}
 					else
 					{
@@ -182,9 +193,13 @@ public class WebServer extends Thread
 						String contentType = "text/html";
 						out.println("Content-Type: "+contentType+"; charset=UTF-8");
 						out.println();
-						out.println("Sorry, there was an error sending this message. Please go back and try again.");
-					}				
-					
+						out.println("Required message data was missing. Please go back and try again.");
+					}
+									
+					out.flush();
+					out.close();
+					in.close();
+					socket.close();
 				}
 				else if (requestParts[1].equals("/"))
 				{
