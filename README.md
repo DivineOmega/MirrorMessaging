@@ -1,7 +1,7 @@
 MirrorMessaging
 ===============
 
-Mirror Messaging is a user-friendly HTML/CSS interface for Bitmessage. The idea behind Mirror Messaging is to provide all the benfits of Bitmessage (encryption, peer-to-peer, etc.) behind a familiar webmail style interface.
+Mirror Messaging is a user-friendly HTML/CSS interface for Bitmessage. The idea behind Mirror Messaging is to provide all the benefits of Bitmessage (encryption, peer-to-peer, etc.) behind a familiar webmail style interface.
 
 It is a Java application which consists of:
 
