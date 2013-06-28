@@ -1,5 +1,8 @@
 package bitmsg;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 
 public class Message 
 {
@@ -36,7 +39,15 @@ public class Message
 		return subject;
 	}
 
-	public int getReceivedTime() 
+	public Date getReceivedTime() 
+	{
+		long millsecondsTimestamp = (long) timestamp * 1000;
+		Timestamp stamp = new Timestamp(millsecondsTimestamp);
+		Date date = new Date(stamp.getTime());
+		return date;
+	}
+	
+	public int getTimestamp()
 	{
 		return timestamp;
 	}
