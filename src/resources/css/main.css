@@ -2,6 +2,7 @@ body
 {
 	color: #222;
 	font-family: arial, sans-serif;
+	font-size: 0.9em;
 }
 a
 {
@@ -39,4 +40,14 @@ a:hover
 {
 	margin-left: -12px;
 	/* margin-left: 4px; */
+}
+
+#inboxTable
+{
+	width: 800px;
+}
+
+#sentTable
+{
+	width: 800px;
 }
