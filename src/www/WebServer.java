@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import org.apache.xmlrpc.XmlRpcException;
@@ -237,7 +238,9 @@ public class WebServer extends Thread
 					
 					String inboxTable = "";
 					
-					inboxTable += "<table>";
+					SimpleDateFormat fullDateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm"); 
+					
+					inboxTable += "<table id=\"inboxTable\">";
 					for (Message msg : msgs) 
 					{
 						inboxTable += "<tr>";
@@ -253,7 +256,7 @@ public class WebServer extends Thread
 						inboxTable += "</td>";
 						
 						inboxTable += "<td>";
-						inboxTable += msg.getReceivedTime();
+						inboxTable += fullDateFormat.format(msg.getReceivedTime());
 						inboxTable += "</td>";
 						
 						inboxTable += "</tr>";
@@ -274,7 +277,9 @@ public class WebServer extends Thread
 					
 					String sentTable = "";
 					
-					sentTable += "<table>";
+					SimpleDateFormat fullDateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm"); 
+					
+					sentTable += "<table id=\"sentTable\">";
 					for (Message msg : msgs) 
 					{
 						sentTable += "<tr>";
@@ -290,7 +295,7 @@ public class WebServer extends Thread
 						sentTable += "</td>";
 						
 						sentTable += "<td>";
-						sentTable += msg.getReceivedTime();
+						sentTable += fullDateFormat.format(msg.getReceivedTime());
 						sentTable += "</td>";
 						
 						sentTable += "<td>";
