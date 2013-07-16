@@ -177,7 +177,7 @@ public class WebServer extends Thread
 						if (sentMessage!=null && !sentMessage.getAckData().isEmpty())
 						{
 							out.println("HTTP/1.0 302 Redirect");
-							out.println("Location: /sent/message/"+sentMessage.getAckData());
+							out.println("Location: /outgoing_status/message/"+sentMessage.getAckData());
 						}
 						else
 						{
@@ -345,6 +345,21 @@ public class WebServer extends Thread
 					
 					out.println(output);
 					
+				}
+				else if (requestParts[1].startsWith("/outgoing_status/message/"))
+				{
+					String ackData = requestParts[1].replace("/outgoing_status/message/", "");
+					
+					BitMsgComms bitMsgComms = new BitMsgComms();
+					Message msg = bitMsgComms.getSentMessageByAckData(ackData);
+					
+					String output = getPreparedTemplateHTML("outgoing_status.html");	
+					
+					output = output.replace("[[subject]]", msg.getSubject());
+					output = output.replace("[[status]]", msg.getHumanFriendlyStatus());
+					output = output.replace("[[ackData]]", msg.getAckData());
+					
+					out.println(output);
 				}
 				else if (requestParts[1].equals("/test"))
 				{
