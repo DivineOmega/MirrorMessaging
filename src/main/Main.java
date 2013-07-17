@@ -11,9 +11,10 @@ public class Main
 	
 	public static void main(String[] args) 
 	{
-		int port = 2940;
+		String interfaceIP = Main.config.getProperty("webserver.interface");
+		int port = Integer.parseInt(Main.config.getProperty("webserver.port"));
 		
-		WebServer webServer = new WebServer(port);		
+		WebServer webServer = new WebServer(interfaceIP, port);		
 		webServer.start();
 		
 		System.out.println("Waiting for web server to start...");
@@ -32,7 +33,7 @@ public class Main
 		System.out.println("Launching web browser...");
 		try
 		{
-			URI url = new URI("http://localhost:2940/");
+			URI url = new URI("http://"+interfaceIP+":"+port+"/");
 			System.out.println("URL: "+url);
 			if (Desktop.isDesktopSupported())
 			{

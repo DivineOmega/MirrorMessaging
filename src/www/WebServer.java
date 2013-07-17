@@ -21,9 +21,11 @@ public class WebServer extends Thread
 {
 	public boolean isListening = false;
 	private int port;
+	private String interfaceIP;
 
-	public WebServer(int port)
+	public WebServer(String interfaceIP, int port)
 	{
+		this.interfaceIP = interfaceIP;
 		this.port = port;
 	}
 	
@@ -102,7 +104,7 @@ public class WebServer extends Thread
 		ServerSocket serverSocket = null;
 		try 
 		{
-			serverSocket = new ServerSocket(port, 0, InetAddress.getByName("127.0.0.1"));
+			serverSocket = new ServerSocket(port, 0, InetAddress.getByName(interfaceIP));
 		} 
 		catch (IOException e) 
 		{
