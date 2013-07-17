@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
+import main.Main;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -19,9 +21,9 @@ public class BitMsgComms
 	private XmlRpcClient getBitMsg() throws MalformedURLException
 	{
 		XmlRpcClientConfigImpl cc = new XmlRpcClientConfigImpl();
-		cc.setServerURL(new URL("http://localhost:8442/"));
-		cc.setBasicUserName("mirror_messaging");
-		cc.setBasicPassword("123");
+		cc.setServerURL(new URL("http://"+Main.config.getProperty("bitmessage.host")+":"+Main.config.getProperty("bitmessage.port")+"/"));
+		cc.setBasicUserName(Main.config.getProperty("bitmessage.user"));
+		cc.setBasicPassword(Main.config.getProperty("bitmessage.pass"));
 		
 		XmlRpcClient bitmsg = new XmlRpcClient();
 		bitmsg.setConfig(cc);

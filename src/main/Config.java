@@ -22,15 +22,23 @@ public class Config
 		
 		load();
 	}
-	
+		
 	private void setDefaults()
 	{
+		properties.setProperty("bitmessage.host", "localhost");
+		properties.setProperty("bitmessage.port", "8442");
+		properties.setProperty("bitmessage.user", "mirror_messaging");
+		properties.setProperty("bitmessage.pass", "123");
 		
+		properties.setProperty("webserver.interface", "127.0.0.1");
+		properties.setProperty("webserver.port", "2940");
 	}
 	
-	public void load()
+	private void load()
 	{		
 		setDefaults();
+		
+		System.out.println("Loading config file: "+mainConfigFile);
 		
 		try 
 		{
@@ -39,16 +47,18 @@ public class Config
 		catch (FileNotFoundException e) 
 		{
 			System.out.println("Config file not found. It will be created.");
-			save();
 		} 
 		catch (IOException e) 
 		{
 			System.out.println("Error reading config file. Exiting.");
 			System.exit(-1);
 		}
+		
+		System.out.println("Config file loaded.");
+		save();
 	}
 	
-	public void save()
+	private void save()
 	{
 		System.out.println("Saving config file: "+mainConfigFile);
 		
@@ -63,5 +73,16 @@ public class Config
 		}
 		
 		System.out.println("Config file saved.");
+	}
+
+	public String getProperty(String key) 
+	{
+		return properties.getProperty(key);
+	}
+	
+	public void setProperty(String key, String value) 
+	{
+		properties.setProperty(key, value);
+		save();
 	}
 }
