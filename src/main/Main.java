@@ -7,6 +7,8 @@ import www.WebServer;
 
 public class Main 
 {
+	public static Config config = new Config();
+	
 	public static void main(String[] args) 
 	{
 		int port = 2940;
