@@ -11,6 +11,8 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import main.Main;
+
 import org.apache.xmlrpc.XmlRpcException;
 
 import bitmsg.Address;
@@ -31,7 +33,8 @@ public class WebServer extends Thread
 	
 	private String getTemplateHTML(String templateName) throws IOException
 	{
-		InputStream is = getClass().getResourceAsStream("/resources/html/"+templateName);
+		InputStream is = getClass().getResourceAsStream("/resources/themes/"+Main.config.getProperty("ui.theme")+"/html/"+templateName);
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(is));
 		
 		String template = "";
@@ -49,7 +52,8 @@ public class WebServer extends Thread
 	
 	private String getCSS(String cssName) throws IOException
 	{
-		InputStream is = getClass().getResourceAsStream("/resources/css/"+cssName);
+		InputStream is = getClass().getResourceAsStream("/resources/themes/"+Main.config.getProperty("ui.theme")+"/css/"+cssName);
+		
 		BufferedReader in = new BufferedReader(new InputStreamReader(is));
 		
 		String template = "";

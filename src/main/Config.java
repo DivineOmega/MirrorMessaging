@@ -32,6 +32,8 @@ public class Config
 		
 		properties.setProperty("webserver.interface", "127.0.0.1");
 		properties.setProperty("webserver.port", "2940");
+		
+		properties.setProperty("ui.theme", "main");
 	}
 	
 	private void load()
