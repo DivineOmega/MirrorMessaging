@@ -15,8 +15,9 @@ public class Message
 	private String message;
 	private String status;
 	private String ackData;
+	private boolean read;
 
-	public Message(int encodingType, String toAddress, String msgid, int timestamp, String fromAddress, String subject, String message, String status, String ackData) 
+	public Message(int encodingType, String toAddress, String msgid, int timestamp, String fromAddress, String subject, String message, String status, String ackData, boolean read) 
 	{
 		this.encodingType = encodingType;
 		this.toAddress = toAddress;
@@ -27,6 +28,7 @@ public class Message
 		this.message = message;
 		this.status = status;
 		this.ackData = ackData;
+		this.read = read;
 	}
 
 	public String getFromAddress() 
