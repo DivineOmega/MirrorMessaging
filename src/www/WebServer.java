@@ -249,7 +249,9 @@ public class WebServer extends Thread
 					inboxTable += "<table id=\"inboxTable\">";
 					for (Message msg : msgs) 
 					{
-						inboxTable += "<tr>";
+						inboxTable += "<tr ";
+						if (msg.isUnread()) inboxTable += "class=\"unreadMessageListing\"";
+						inboxTable += ">";
 						
 						inboxTable += "<td>";
 						inboxTable += msg.getFromAddress();

@@ -111,7 +111,8 @@ public class BitMsgComms
 			String message = jsonMsg.getString("message").trim();
 			message = new String(Base64.decodeBase64(message), "UTF-8");
 			
-			boolean read = jsonMsg.getBoolean("read");
+			boolean read = false;
+			if (jsonMsg.getInt("read")==1) read = true;
 			
 			Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, null, null, read);
 			
@@ -193,7 +194,8 @@ public class BitMsgComms
 		String message = jsonMsg.getString("message").trim();
 		message = new String(Base64.decodeBase64(message), "UTF-8");
 		
-		boolean read = jsonMsg.getBoolean("read");
+		boolean read = false;
+		if (jsonMsg.getInt("read")==1) read = true;
 		
 		Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, null, null, read);
 		

@@ -89,5 +89,10 @@ public class Message
 	{
 		return ackData;
 	}
+
+	public boolean isUnread() 
+	{
+		return !read;
+	}
 	
 }
