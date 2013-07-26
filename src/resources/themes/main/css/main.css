@@ -50,8 +50,11 @@ a:hover
 {
 	width: 100%;
 }
-
 #sentTable
+{
+	width: 100%;
+}
+#composeTable
 {
 	width: 100%;
 }
