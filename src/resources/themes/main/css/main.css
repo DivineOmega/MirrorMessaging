@@ -50,6 +50,10 @@ a:hover
 {
 	width: 100%;
 }
+#inboxTable .unreadMessageListing
+{
+	font-weight: bold;
+}
 #sentTable
 {
 	width: 100%;
