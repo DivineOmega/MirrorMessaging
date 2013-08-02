@@ -284,5 +284,14 @@ public class BitMsgComms
 		return getSentMessageByAckData(ackData);
 		
 	}
+	
+	public void setRead(String msg_id, int read) throws MalformedURLException, XmlRpcException
+	{
+		Vector<String> params = new Vector<String>();
+		params.addElement(msg_id);
+		params.addElement(Integer.toString(read));
+		
+		getBitMsg().execute("setRead", params);
+	}
 
 }

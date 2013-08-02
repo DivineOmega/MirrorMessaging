@@ -313,6 +313,7 @@ public class WebServerConnection extends Thread
 				
 				out.println(output);
 				
+				bitMsgComms.setRead(msg.getId(), 1);
 			}
 			else if (requestParts[1].startsWith("/sent/message/"))
 			{
