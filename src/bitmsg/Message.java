@@ -76,11 +76,11 @@ public class Message
 	
 	public String getHumanFriendlyStatus()
 	{
-		if (status.equals("awaitingpubkey")) return "Awaiting recipient details...";
-		if (status.equals("msgqueued")) return "Sending soon...";
-		if (status.equals("doingmsgpow")) return "Sending...";
+		if (status.equals("awaitingpubkey")) return "Awaiting recipient details";
+		if (status.equals("msgqueued")) return "Message queued";
+		if (status.equals("doingmsgpow")) return "Doing work necessary to send message";
 		if (status.equals("msgsent")) return "Sent";
-		if (status.equals("ackreceived")) return "Delivered";
+		if (status.equals("ackreceived")) return "Delivery confirmed";
 		
 		return status;
 	}

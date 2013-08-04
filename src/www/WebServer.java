@@ -40,6 +40,7 @@ public class WebServer extends Thread
 			try 
 			{
 				Socket socket = serverSocket.accept();
+
 				WebServerConnection wsc = new WebServerConnection(socket);
 				wsc.start();
 			} 
