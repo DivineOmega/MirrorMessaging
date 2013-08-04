@@ -18,10 +18,15 @@ a:hover
 	font-size: 80%;
 	color: #999;
 }
+#mainContent
+{
+	float: left;
+	width: 86%;
+}
 #sidebar
 {
 	float: left; 
-	width: 120px; 
+	width: 9%; 
 	padding: 10px; 
 	border-right: 1px dotted #ccc; 
 	margin-right: 20px; 
@@ -34,22 +39,28 @@ a:hover
 }
 #sidebar #compose
 {
-	margin-left: -12px;
+	margin-left: -24px;
 }
 #sidebar #mailboxes
 {
-	margin-left: -12px;
-	/* margin-left: 4px; */
+	margin-left: -24px;
 }
 
 #inboxTable
 {
-	width: 800px;
+	width: 100%;
 }
-
+#inboxTable .unreadMessageListing
+{
+	font-weight: bold;
+}
 #sentTable
 {
-	width: 800px;
+	width: 100%;
+}
+#composeTable
+{
+	width: 100%;
 }
 
 .spinner

@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Vector;
 
+import main.Main;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.client.XmlRpcClient;
@@ -19,9 +21,9 @@ public class BitMsgComms
 	private XmlRpcClient getBitMsg() throws MalformedURLException
 	{
 		XmlRpcClientConfigImpl cc = new XmlRpcClientConfigImpl();
-		cc.setServerURL(new URL("http://localhost:8442/"));
-		cc.setBasicUserName("mirror_messaging");
-		cc.setBasicPassword("123");
+		cc.setServerURL(new URL("http://"+Main.config.getProperty("bitmessage.host")+":"+Main.config.getProperty("bitmessage.port")+"/"));
+		cc.setBasicUserName(Main.config.getProperty("bitmessage.user"));
+		cc.setBasicPassword(Main.config.getProperty("bitmessage.pass"));
 		
 		XmlRpcClient bitmsg = new XmlRpcClient();
 		bitmsg.setConfig(cc);
@@ -109,7 +111,10 @@ public class BitMsgComms
 			String message = jsonMsg.getString("message").trim();
 			message = new String(Base64.decodeBase64(message), "UTF-8");
 			
-			Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, null, null);
+			boolean read = false;
+			if (jsonMsg.getInt("read")==1) read = true;
+			
+			Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, null, null, read);
 			
 			msgs.add(msg);
 			
@@ -153,7 +158,7 @@ public class BitMsgComms
 			
 			String ackData = jsonMsg.getString("ackData");
 						
-			Message msg = new Message(encodingType, toAddress, msgid, lastActionTime, fromAddress, subject, message, status, ackData);
+			Message msg = new Message(encodingType, toAddress, msgid, lastActionTime, fromAddress, subject, message, status, ackData, true);
 			
 			msgs.add(msg);
 			
@@ -189,7 +194,10 @@ public class BitMsgComms
 		String message = jsonMsg.getString("message").trim();
 		message = new String(Base64.decodeBase64(message), "UTF-8");
 		
-		Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, null, null);
+		boolean read = false;
+		if (jsonMsg.getInt("read")==1) read = true;
+		
+		Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, null, null, read);
 		
 		return msg;
 	}
@@ -222,7 +230,7 @@ public class BitMsgComms
 		
 		String ackData = jsonMsg.getString("ackData");
 		
-		Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, status, ackData);
+		Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, status, ackData, true);
 		
 		return msg;
 	}
@@ -253,7 +261,7 @@ public class BitMsgComms
 		
 		String status = jsonMsg.getString("status");
 		
-		Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, status, ackData);
+		Message msg = new Message(encodingType, toAddress, msgid, receivedTime, fromAddress, subject, message, status, ackData, true);
 		
 		return msg;
 	}
