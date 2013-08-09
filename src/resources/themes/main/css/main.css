@@ -45,6 +45,13 @@ a:hover
 {
 	margin-left: -24px;
 }
+#sidebar #poweredBy
+{
+	font-size: 60%;
+	color: #cccccc;
+	text-align: center;
+	margin-top: 5px;
+}
 
 #inboxTable
 {
